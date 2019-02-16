@@ -41,10 +41,11 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney")
+        LatLng BryantDenny = new LatLng(33.2083, -87.5504);
+        mMap.addMarker(new MarkerOptions().position(BryantDenny)
+                .title("Bryant Denny Stadium")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.wind_up_car)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(BryantDenny));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
     }
 }
