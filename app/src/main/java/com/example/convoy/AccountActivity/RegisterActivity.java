@@ -31,7 +31,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
+import java.lang.*;
 //import com.example.convoy.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -81,6 +81,12 @@ public class RegisterActivity extends AppCompatActivity {
                       {
                           //display error
                           showMessage("Please fill all fields");
+                          btnRegister.setVisibility(View.VISIBLE);
+                          loadingProgress.setVisibility(View.INVISIBLE);
+                      }
+                      else if ( regPassword != confPassword)
+                      {
+                          showMessage("Please match passwords");
                           btnRegister.setVisibility(View.VISIBLE);
                           loadingProgress.setVisibility(View.INVISIBLE);
                       }
