@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.convoy.AccountActivity.LoginActivity;
 import com.example.convoy.AccountActivity.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent mapIntent = new Intent(this, LoginActivity.class);
+        Intent mapIntent = new Intent(this, actMap.class);
         startActivity(mapIntent);
     }
 }

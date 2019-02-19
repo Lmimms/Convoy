@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.convoy.R;
+import com.example.convoy.actMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -47,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister;
 
     private FirebaseAuth mAuth;
+    Intent mapIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+        mapIntent = new Intent(this, actMap.class);
+
+
 
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                       else//this will be where we make the account after we do more checking
                       {
                                 CreateUserAccount(email, name, password);
+                                startActivity(mapIntent);
                       }
 
                                            }
@@ -117,6 +123,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     private void CreateUserAccount(String email, final String name, String password)
