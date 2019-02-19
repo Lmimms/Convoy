@@ -25,6 +25,7 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private LocationListener mLocationListener;
     private LocationManager mLocationManager;
+    private boolean firstUIUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +36,9 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
+        firstUIUpdate = true;
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-    }
-    //checks permissions for location
-    // skips missiong permission
-    @SuppressLint("MissingPermission")
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-                    Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    updateMapUI(location);
-                }
-            }
-        }
     }
 
     /**
@@ -115,6 +100,24 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
 
     }
 
+    //checks permissions for location
+    // skips missiong permission
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                    Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    updateMapUI(location);
+                }
+            }
+        }
+    }
+
     private void updateMapUI(Location location){
 
         double lat = location.getLatitude();
@@ -123,8 +126,11 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         mMap.clear();
         mMap.addMarker((new MarkerOptions().position(currentLocation)
                 .title("You are here")));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
+        if(firstUIUpdate) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
+            firstUIUpdate = false;
+        }
 
     }
 
