@@ -38,7 +38,8 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
-
+    //checks permissions for location
+    // skips missiong permission
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -46,13 +47,14 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_FINE_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                    Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    updateMapUI(location);
+                }
             }
         }
     }
-
-
 
     /**
      * Manipulates the map once available.
@@ -68,13 +70,14 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
         mLocationListener = new LocationListener() {
             //
             //updates map with location on location change
             @Override
             public void onLocationChanged(Location location) {
 
-                Log.d("My Location: ", location.toString());
+                Log.e("My Location: ", location.toString());
                 updateMapUI(location);
             }
 
@@ -85,6 +88,7 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
 
             @Override
             public void onProviderEnabled(String provider) {
+
 
             }
 
@@ -105,10 +109,10 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         //acces granted request location
         else{
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
+            Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            updateMapUI(location);
         }
 
-
-        //showLocationOnMap();
     }
 
     private void updateMapUI(Location location){
