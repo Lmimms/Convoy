@@ -1,29 +1,30 @@
 package com.example.convoy;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
+import android.util.Log;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 public class actMap extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 1;
     private GoogleMap mMap;
-    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationListener mLocationListener;
+    private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,39 +34,21 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment;
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
-
-
-
+    @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_FINE_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showLocationOnMap();
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Toast toast = Toast.makeText(getApplicationContext(), "Need Location Permission to show location",
-                            Toast.LENGTH_LONG);
-                    toast.show();
-                    LatLng BryantDenny = new LatLng(33.2083, -87.5504);
-                    mMap.addMarker(new MarkerOptions().position(BryantDenny)
-                                    .title("Bryant Denny Stadium")
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.wind_up_car)));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(BryantDenny));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
-                }
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
             }
-            // other 'case' lines to check for other
-            // permissions this app might request.
         }
     }
 
@@ -83,44 +66,63 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        showLocationOnMap();
-    }
 
-    private void showLocationOnMap(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        mLocationListener = new LocationListener() {
+            //
+            //updates map with location on location change
+            @Override
+            public void onLocationChanged(Location location) {
 
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                Log.d("My Location: ", location.toString());
+                updateMapUI(location);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        //Check Permissions and request if access not granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_FINE_LOCATION);
 
         }
-        else {
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                showLocation(location);
-                            }
-                        }
-                    });
+        //acces granted request location
+        else{
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
         }
+
+
+        //showLocationOnMap();
     }
 
-    private void showLocation(Location location) {
+    private void updateMapUI(Location location){
 
-        if (location != null) {
-            double lat = location.getLatitude();
-            double log = location.getLongitude();
-            LatLng currentLocation = new LatLng(lat, log);
-            mMap.addMarker((new MarkerOptions().position(currentLocation)
-                    .title("You are here")));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
-        }
+        double lat = location.getLatitude();
+        double log = location.getLongitude();
+        LatLng currentLocation = new LatLng(lat, log);
+        mMap.clear();
+        mMap.addMarker((new MarkerOptions().position(currentLocation)
+                .title("You are here")));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
+
     }
-
 
 
 
