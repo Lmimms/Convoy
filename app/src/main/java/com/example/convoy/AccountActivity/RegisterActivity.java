@@ -46,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText regName, regMail, regPassword, confPassword;
     private ProgressBar loadingProgress;
     private Button btnRegister;
+    private Button btnBack;
 
     private FirebaseAuth mAuth;
     Intent mapIntent;
@@ -59,10 +60,12 @@ public class RegisterActivity extends AppCompatActivity {
         regMail = findViewById(R.id.regMail);
         regPassword = findViewById(R.id.regPassword);
         confPassword = findViewById(R.id.confPassword);
+        btnBack = findViewById(R.id.btnBackLogin);
         regName = findViewById(R.id.regName);
         loadingProgress = findViewById(R.id.loadingProgress);
         btnRegister = findViewById(R.id.btnRegister);
         loadingProgress.setVisibility(View.INVISIBLE);
+
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -70,6 +73,14 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backLogin = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(backLogin);
+                finish();
+            }
+        });
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
