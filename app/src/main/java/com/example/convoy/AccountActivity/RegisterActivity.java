@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                           btnRegister.setVisibility(View.VISIBLE);
                           loadingProgress.setVisibility(View.INVISIBLE);
                       }
-                      else if ( regPassword != confPassword)
+                      else if ( !password.equals(password2))
                       {
                           showMessage("Please match passwords");
                           btnRegister.setVisibility(View.VISIBLE);
