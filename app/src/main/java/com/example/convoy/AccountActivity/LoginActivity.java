@@ -44,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister2 = findViewById(R.id.btnRegister);
         loginProgress = findViewById(R.id.loginProgress);
         mAuth = FirebaseAuth.getInstance();
-        MainActivity = new Intent(this, com.example.convoy.MainActivity.class);
+        //change whats below to change what opens after login
+        MainActivity = new Intent(this, com.example.convoy.actMap.class);
         loginPhoto2 = findViewById(R.id.loginPhoto);
 
         btnRegister2.setOnClickListener(new View.OnClickListener() {
