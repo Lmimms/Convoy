@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         loginProgress = findViewById(R.id.loginProgress);
         mAuth = FirebaseAuth.getInstance();
         //change whats below to change what opens after login
-        MainActivity = new Intent(this, com.example.convoy.actMap.class);
+        MainActivity = new Intent(this, com.example.convoy.MainActivity.class);
         loginPhoto2 = findViewById(R.id.loginPhoto);
 
         btnRegister2.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(mail.isEmpty() || password.isEmpty())
                 {
-                    showMessage("please Verify Email and Passowrd");
+                    showMessage("please Verify Email and Password");
                     btnLogin.setVisibility(View.VISIBLE);
                     loginProgress.setVisibility(View.INVISIBLE);
                 }
