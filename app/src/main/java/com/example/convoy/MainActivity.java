@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_map://Fixme how to change to map
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                   //      new actMap()).commit();
+                Intent registerActivity = new Intent(getApplicationContext(),actMap.class);
+                startActivity(registerActivity);
+                finish();
                 break;
             case R.id.nav_chat:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -64,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
                // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                  //       new LoginActivity()).commit();
+                Intent registerActivity2;
+                registerActivity2 = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(registerActivity2);
+                finish();
                 break;
 
         }
