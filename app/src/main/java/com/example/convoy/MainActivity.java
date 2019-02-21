@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.convoy.AccountActivity.LoginActivity;
 import com.example.convoy.AccountActivity.RegisterActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                  //       new LoginActivity()).commit();
                 Intent registerActivity2;
                 registerActivity2 = new Intent(getApplicationContext(),LoginActivity.class);
+                FirebaseAuth what = FirebaseAuth.getInstance();
+                what.signOut();
                 startActivity(registerActivity2);
                 finish();
                 break;
