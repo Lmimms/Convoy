@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-    if(savedInstanceState==null) {//FIXME change to login
+          if(savedInstanceState==null) {//FIXME change to login
      /*   getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new ChatFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_chat);*/
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Intent mapIntent = new Intent(this, LoginActivity.class);
         startActivity(mapIntent);
-    }}
+        }}
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
