@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(mail.isEmpty() || password.isEmpty())
                 {
-                    showMessage("please Verify Email and Passowrd");
+                    showMessage("please Verify Email and Password");
                     btnLogin.setVisibility(View.VISIBLE);
                     loginProgress.setVisibility(View.INVISIBLE);
                 }
