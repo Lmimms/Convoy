@@ -42,23 +42,29 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
                 new ChatFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_chat);
 
-
-
           }
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()){
-            case R.id.nav_map://Fixme how to change to map
+            /*case R.id.nav_map://Fixme how to change to map
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 //      new actMap()).commit();
                 Intent registerActivity = new Intent(getApplicationContext(),actMap.class);
                 startActivity(registerActivity);
                 finish();
-                break;
+                break;*/
             case R.id.nav_chat:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ChatFragment()).commit();
+                break;
+            case R.id.nav_poll:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new PollFragment()).commit();
+                break;
+            case R.id.nav_map:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MapFragment()).commit();
                 break;
             case R.id.nav_game:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
