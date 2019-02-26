@@ -70,6 +70,10 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new GameFragment()).commit();
                 break;
+            case R.id.nav_profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ProfileFragment()).commit();
+                break;
             case R.id.nav_logout: //FIXME how to change to login
                 Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
                 // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
