@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,6 +20,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class actMap extends FragmentActivity implements OnMapReadyCallback {
 
@@ -25,21 +29,46 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private LocationListener mLocationListener;
     private LocationManager mLocationManager;
+    private Location userLocation;
     private boolean firstUIUpdate;
+    private boolean trackUser;
+
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_map);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment;
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapFragment);
 
+        final ImageButton btnLocation = findViewById(R.id.btnLocationButton);
+        btnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!trackUser){
+                    //need to add change of icon
+                    trackUser = true;
+                }
+                else{
+                    trackUser = false;
+                }
+
+            }
+        });
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         firstUIUpdate = true;
+        trackUser = true;
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
+
+
 
     /**
      * Manipulates the map once available.
@@ -62,8 +91,10 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
             @Override
             public void onLocationChanged(Location location) {
 
-                Log.e("My Location: ", location.toString());
-                updateMapUI(location);
+                Log.d("My Location: ", location.toString());
+                userLocation = location;
+                updateMapUI();
+                writeLocation();
             }
 
             @Override
@@ -94,10 +125,10 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
         //acces granted request location
         else{
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
-            Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            updateMapUI(location);
+            userLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            updateMapUI();
+            writeLocation();
         }
-
     }
 
     //checks permissions for location
@@ -111,29 +142,33 @@ public class actMap extends FragmentActivity implements OnMapReadyCallback {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-                    Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    updateMapUI(location);
+                    userLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    updateMapUI();
+                    writeLocation();
                 }
             }
         }
     }
 
-    private void updateMapUI(Location location){
-
-        double lat = location.getLatitude();
-        double log = location.getLongitude();
+    private void updateMapUI(){
+        double lat = userLocation.getLatitude();
+        double log = userLocation.getLongitude();
         LatLng currentLocation = new LatLng(lat, log);
         mMap.clear();
         mMap.addMarker((new MarkerOptions().position(currentLocation)
                 .title("You are here")));
-        if(firstUIUpdate) {
+        if(firstUIUpdate || trackUser) {
             mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
             firstUIUpdate = false;
         }
-
     }
 
+    private void writeLocation(){
+        double lat = userLocation.getLatitude();
+        double log = userLocation.getLongitude();
+        mDatabase.child("user").child("jbarksdale").child("lat").setValue(lat);
+        mDatabase.child("user").child("jbarksdale").child("log").setValue(log);
 
-
+    }
 }

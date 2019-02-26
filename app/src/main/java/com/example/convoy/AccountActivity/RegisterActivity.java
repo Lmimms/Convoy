@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.convoy.MainActivity;
 import com.example.convoy.R;
 import com.example.convoy.actMap;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnBack;
 
     private FirebaseAuth mAuth;
-    Intent mapIntent;
+    Intent mainIntenet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        mapIntent = new Intent(this, actMap.class);
+        mainIntenet = new Intent(this, MainActivity.class);
 
 
 
@@ -109,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
                       else//this will be where we make the account after we do more checking
                       {
                                 CreateUserAccount(email, name, password);
-                                startActivity(mapIntent);
+                                startActivity(mainIntenet);
                       }
 
                                            }
