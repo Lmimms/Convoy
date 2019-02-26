@@ -22,7 +22,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AccountActivity.RegisterActivity"/>
-        <activity android:name=".AccountActivity.LoginActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -38,7 +37,7 @@
         <activity
             android:name=".actMap"
             android:label="@string/title_activity_act_map" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".AccountActivity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
