@@ -1,8 +1,11 @@
 package com.example.convoy;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class NavActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
-
+    private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,10 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //Check Permissions and request if access not granted
+        getPermissions();
+
 
         if(savedInstanceState==null) {//FIXME change to login
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -98,4 +105,15 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
         }else
             super.onBackPressed();
     }
+
+    private void getPermissions(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_FINE_LOCATION);
+
+        }
+    }
+
 }
