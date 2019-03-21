@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,7 +47,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
 
 
     private DatabaseReference rootRef;
-    private DatabaseReference userRef;
     private DatabaseReference membersRef;
     private FirebaseUser currentFirebaseUser;
 
@@ -148,7 +146,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
     }
 
     private void setFirebaseRefs(){
-        userRef = rootRef.child("user");
         membersRef = rootRef.child("groups").child("group1").child("members");
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         membersRef.addValueEventListener(new ValueEventListener() {
