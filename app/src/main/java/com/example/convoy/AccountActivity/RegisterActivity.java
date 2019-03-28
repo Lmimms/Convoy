@@ -207,7 +207,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //this function will take us to our home page
     private void updateUI() {
-        Intent MainActivity = new Intent(getApplicationContext(), com.example.convoy.MainActivity.class);
+        Intent MainActivity = new Intent(getApplicationContext(), com.example.convoy.NavActivity.class);
         startActivity(MainActivity);
         finish();
     }
