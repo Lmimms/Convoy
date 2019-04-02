@@ -22,6 +22,10 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
 
     private DrawerLayout drawer;
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 1;
+    private String currentGroupID;
+
+    public String getCurrentGroupID(){ return currentGroupID; }
+    public void setCurrentGroupID(String ID){ this.currentGroupID = ID; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,8 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        currentGroupID = "group1";
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -70,8 +76,12 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
                         new PollFragment()).commit();
                 break;
             case R.id.nav_map:
+                Bundle bundle = new Bundle();
+                bundle.putString("params", "noName");
+                MapFragment map = new MapFragment();
+                map.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new MapFragment()).commit();
+                        map).commit();
                 break;
             case R.id.nav_game:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

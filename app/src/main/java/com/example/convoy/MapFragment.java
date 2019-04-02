@@ -42,6 +42,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
     private Location userLocation;
     private boolean firstUIUpdate;
     private boolean trackUser;
+    private String groupID;
 
     private ArrayList<GroupMember> members;
 
@@ -53,6 +54,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d("mapFragment", "used onCreateView method");
+
         if (mapFragment == null) {
             mapFragment = SupportMapFragment.newInstance();
             mapFragment.getMapAsync(this);
@@ -62,6 +65,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
         trackUser = true;
         members = new ArrayList<GroupMember>();
         rootRef = FirebaseDatabase.getInstance().getReference();
+
 
 
         getChildFragmentManager().beginTransaction().replace(R.id.mapFragment, mapFragment).commit();
@@ -127,6 +131,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
         writeLocation();
     }
 
+    //Updates the map UI by placing a new marker for every element in the Members array
     private void updateMapUI(){
         double lat = userLocation.getLatitude();
         double log = userLocation.getLongitude();
@@ -136,17 +141,30 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
         for(int i = 0; i<members.size();i++){
             map.addMarker((new MarkerOptions().position(members.get(i).getLocation())
                     .title(members.get(i).getName())));
+
+            //when adding a marker check to see if it is the current user and
+            // move camera to that location
+            if(members.get(i).getUserID() == currentFirebaseUser.getUid()){
+                if(firstUIUpdate || trackUser) {
+                    map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+                    map.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
+                    firstUIUpdate = false;
+                }
+            }
         }
 
-        if(firstUIUpdate || trackUser) {
-            map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-            map.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
-            firstUIUpdate = false;
-        }
+        //Used to check if the map camera should be used to focus on the users location
+//        if(firstUIUpdate || trackUser) {
+//            map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+//            map.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
+//            firstUIUpdate = false;
+//        }
     }
 
+    // Setup the firebase group reference to listen for changes in group members locations
     private void setFirebaseRefs(){
-        membersRef = rootRef.child("groups").child("group1").child("members");
+        groupID = ((NavActivity) getActivity()).getCurrentGroupID();
+        membersRef = rootRef.child("groups").child(groupID).child("members");
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         membersRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -154,8 +172,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
                 GroupMember member;
                 members.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    String id = snapshot.getKey();
+                    Log.d("Map Frag", "User ID being added to array" + id);
                     String name = snapshot.child("Name").getValue().toString();
-                    member = new GroupMember(name,(double) snapshot.child("lat").getValue(),(double) snapshot.child("long").getValue());
+                    member = new GroupMember(name,(double) snapshot.child("lat").getValue(),(double) snapshot.child("long").getValue(),snapshot.getKey());
                     members.add(member);
                 }
                 updateMapUI();
