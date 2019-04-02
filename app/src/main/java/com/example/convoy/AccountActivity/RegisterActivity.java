@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        mainIntenet = new Intent(this, MainActivity.class);
+        mainIntenet = new Intent(this, com.example.convoy.NavActivity.class);
 
 
 
