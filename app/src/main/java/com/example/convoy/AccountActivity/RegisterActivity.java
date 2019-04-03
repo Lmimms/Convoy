@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.convoy.MainActivity;
+import com.example.convoy.MapFragment;
 import com.example.convoy.NavActivity;
 import com.example.convoy.R;
 import com.example.convoy.actMap;
@@ -31,10 +32,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.lang.*;
+import java.util.HashMap;
 //import com.example.convoy.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -51,6 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnBack;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference rootRef;
+
     Intent mainIntenet;
 
     @Override
@@ -71,7 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        mainIntenet = new Intent(this, NavActivity.class);
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        mainIntenet = new Intent(this, actMap.class);
 
 
 
@@ -140,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void CreateUserAccount(String email, final String name, String password)
+    private void CreateUserAccount(final String email, final String name, String password)
     {
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -148,6 +155,14 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful())
                         {
+                           ///update database
+                            /*String currentNewId = mAuth.getCurrentUser().getUid();
+                            HashMap<String, Object> userInfoMap = new HashMap<>();
+                            userInfoMap.put("name", name);
+                            userInfoMap.put("email", email);
+
+                            rootRef.child("user").child(currentNewId).setValue(userInfoMap);
+                            ///*/
                             showMessage("Account Created!");
                             updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
                         }
