@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         rootRef = FirebaseDatabase.getInstance().getReference();
-        mainIntenet = new Intent(this, NavActivity.class);
+        mainIntenet = new Intent(this, LoginActivity.class);
 
 
 
@@ -155,15 +155,15 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                            ///update database
-                            /*String currentNewId = mAuth.getCurrentUser().getUid();
+                            FirebaseUser savedUser = mAuth.getCurrentUser();
+                            String currentNewId = savedUser.getUid();
                             HashMap<String, Object> userInfoMap = new HashMap<>();
                             userInfoMap.put("name", name);
                             userInfoMap.put("email", email);
-
                             rootRef.child("user").child(currentNewId).setValue(userInfoMap);
-                            ///*/
+                            ///
                             showMessage("Account Created!");
-                            updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
+                            updateUserInfo( name, pickedImgUri, savedUser);
                         }
                         else
                         {
