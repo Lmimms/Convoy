@@ -24,7 +24,6 @@ import com.example.convoy.MainActivity;
 import com.example.convoy.MapFragment;
 import com.example.convoy.NavActivity;
 import com.example.convoy.R;
-import com.example.convoy.actMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -78,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         rootRef = FirebaseDatabase.getInstance().getReference();
-        mainIntenet = new Intent(this, actMap.class);
+        mainIntenet = new Intent(this, NavActivity.class);
 
 
 
