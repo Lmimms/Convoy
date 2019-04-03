@@ -155,6 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                            ///update database
+                            showMessage("ACCOUNT IS ADDING NOWWWW??????????????????????????");
                             FirebaseUser savedUser = mAuth.getCurrentUser();
                             String currentNewId = savedUser.getUid();
                             HashMap<String, Object> userInfoMap = new HashMap<>();
