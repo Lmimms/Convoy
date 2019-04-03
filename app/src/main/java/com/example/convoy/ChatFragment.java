@@ -59,6 +59,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        currentGroup = ((NavActivity) getActivity()).getCurrentGroupID();
 
         //initilize everything
         //set up the xml objects
@@ -69,7 +70,7 @@ public class ChatFragment extends Fragment {
         rootRef = FirebaseDatabase.getInstance().getReference();
         //get firbase needed references
                                                                                                 //needed to add child messages
-        groupRef = FirebaseDatabase.getInstance().getReference().child("groups").child("group1").child("messages");//FIXME replace group1 with current group
+        groupRef = FirebaseDatabase.getInstance().getReference().child("groups").child(currentGroup).child("messages");//FIXME replace group1 with current group
         mAuth = FirebaseAuth.getInstance();
         if(mAuth == null)
         {
@@ -111,6 +112,7 @@ public class ChatFragment extends Fragment {
             Calendar calForTime = Calendar.getInstance();
             SimpleDateFormat currentTimeFormat = new SimpleDateFormat( "hh:mm a");
             currentTime = currentTimeFormat.format(calForTime.getTime());
+            currentUserName = "tommy";
 
             HashMap<String, Object> groupMessageKey = new HashMap();
             groupRef.updateChildren(groupMessageKey);
