@@ -1,10 +1,5 @@
 package com.example.convoy;
 
-import android.content.*;
-import android.os.Bundle;
-import android.os.Message;
-import android.support.constraint.solver.widgets.Snapshot;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,26 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.lang.Object;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
 
-import com.example.convoy.AccountActivity.MessageClass;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class ChatFragment extends Fragment {
     // Firebase instance variables
@@ -52,12 +38,11 @@ public class ChatFragment extends Fragment {
     private Button sndBtn;
     private EditText messageToSend;
     private ScrollView msgScroll;
+
     //the txt message itself
     //to hold member data
     private String currentUserId, currentUserName, currentDate, currentTime, currentGroup;
     private GroupMember memberData;
- ////
- ////
 
 
     @Nullable
@@ -75,7 +60,7 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-    //initilize everything
+        //initilize everything
         //set up the xml objects
         sndBtn = getView().findViewById(R.id.sendBtn);
         messageToSend = getView().findViewById(R.id.txtMessage);
@@ -83,7 +68,8 @@ public class ChatFragment extends Fragment {
         //setup firebase  references
         rootRef = FirebaseDatabase.getInstance().getReference();
         //get firbase needed references
-        groupRef = FirebaseDatabase.getInstance().getReference().child("groups").child("group1");//FIXME replace group1 with current group
+                                                                                                //needed to add child messages
+        groupRef = FirebaseDatabase.getInstance().getReference().child("groups").child("group1").child("messages");//FIXME replace group1 with current group
         mAuth = FirebaseAuth.getInstance();
         if(mAuth == null)
         {
@@ -133,7 +119,8 @@ public class ChatFragment extends Fragment {
 
             HashMap<String, Object> messageInfoMap = new HashMap<>();
             messageInfoMap.put("name", currentUserName);
-            messageInfoMap.put("message", messageToSend);
+            // had messageToSend and no the msg String
+            messageInfoMap.put("message", msg);
             messageInfoMap.put("date", currentDate);
             messageInfoMap.put("time", currentTime);
 

@@ -1,7 +1,6 @@
-package com.example.convoy.AccountActivity;
+package com.example.convoy;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class MessageClass {
     private String message;

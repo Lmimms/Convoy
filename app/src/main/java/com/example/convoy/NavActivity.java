@@ -53,7 +53,7 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
         if(savedInstanceState==null) {//FIXME change to login
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new ChatFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_chat);
+        navigationView.setCheckedItem(R.id.nav_poll);
 
           }
     }
@@ -76,12 +76,8 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
                         new PollFragment()).commit();
                 break;
             case R.id.nav_map:
-                Bundle bundle = new Bundle();
-                bundle.putString("params", "noName");
-                MapFragment map = new MapFragment();
-                map.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        map).commit();
+                        new MapFragment()).commit();
                 break;
             case R.id.nav_game:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
