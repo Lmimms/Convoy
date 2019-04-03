@@ -211,7 +211,7 @@ public class ChatFragment extends Fragment {
             }
             String chatTime = (String) ((DataSnapshot) iterator.next()).getValue();
 
-            messageTextView.append(chatName + "\n" + chatMessage + "\n" + chatName +  "     "+ chatTime + " " + chatDate +"\n\n");
+            messageTextView.append(chatName + "\n" + chatMessage + "\n"+ chatTime + " " + chatDate +"\n\n");
         }
 
 
