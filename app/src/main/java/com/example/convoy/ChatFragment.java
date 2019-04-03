@@ -11,17 +11,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.lang.Object;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ChatFragment extends Fragment {
     // Firebase instance variables
@@ -29,6 +36,7 @@ public class ChatFragment extends Fragment {
     private DatabaseReference rootRef;
     private DatabaseReference messageRef;
     private FirebaseAuth mAuth;
+    private TextView messageTextView;
 
     //Array for messages
     private ArrayList<MessageClass> messages;
@@ -56,6 +64,7 @@ public class ChatFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_chat, container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -65,6 +74,7 @@ public class ChatFragment extends Fragment {
         sndBtn = getView().findViewById(R.id.sendBtn);
         messageToSend = getView().findViewById(R.id.txtMessage);
         msgScroll = getView().findViewById(R.id.msgScroller);
+        messageTextView = getView().findViewById(R.id.group_chat_text);
         //setup firebase  references
         rootRef = FirebaseDatabase.getInstance().getReference();
         //get firbase needed references
@@ -81,7 +91,7 @@ public class ChatFragment extends Fragment {
         usersRef = FirebaseDatabase.getInstance().getReference().child("user");
 
         ////////////////////////////////
-
+        getUserInfo();
 
         sndBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +102,23 @@ public class ChatFragment extends Fragment {
             }
         });
 
+    }
+
+    private void getUserInfo() {
+        usersRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists())
+                {
+                    currentUserName = dataSnapshot.child("name").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void sendMessageToDataBase() {
@@ -126,6 +153,63 @@ public class ChatFragment extends Fragment {
 
             groupKeyRef.updateChildren(messageInfoMap);
         }
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        groupRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.exists())
+                {
+                    DisplayMessages(dataSnapshot);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.exists())
+                {
+                    DisplayMessages(dataSnapshot);
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void DisplayMessages(DataSnapshot dataSnapshot)
+    {
+        messageTextView = getView().findViewById(R.id.group_chat_text);
+
+        Iterator iterator = dataSnapshot.getChildren().iterator();
+
+        while(iterator.hasNext())
+        {
+            String chatDate = (String) ((DataSnapshot) iterator.next()).getValue();
+            String chatMessage = (String) ((DataSnapshot) iterator.next()).getValue();
+            String chatName = (String) ((DataSnapshot) iterator.next()).getValue();
+            String chatTime = (String) ((DataSnapshot) iterator.next()).getValue();
+
+            messageTextView.append(chatName + "\n" + chatMessage + "\n" + chatName +  "     "+ chatTime + " " + chatDate +"\n\n");
+        }
+
 
     }
 
