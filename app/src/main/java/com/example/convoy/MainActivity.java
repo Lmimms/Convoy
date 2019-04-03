@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
           if(savedInstanceState==null) {//FIXME change to login
-     /*   getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new ChatFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_chat);*/
+        navigationView.setCheckedItem(R.id.nav_chat);
 
 
 //        Intent loginIntent = new Intent(this, LoginActivity.class);
