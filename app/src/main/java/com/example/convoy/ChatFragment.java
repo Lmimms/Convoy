@@ -205,6 +205,10 @@ public class ChatFragment extends Fragment {
             String chatDate = (String) ((DataSnapshot) iterator.next()).getValue();
             String chatMessage = (String) ((DataSnapshot) iterator.next()).getValue();
             String chatName = (String) ((DataSnapshot) iterator.next()).getValue();
+            if(chatName == null)
+            {
+                chatName = "errorName";
+            }
             String chatTime = (String) ((DataSnapshot) iterator.next()).getValue();
 
             messageTextView.append(chatName + "\n" + chatMessage + "\n" + chatName +  "     "+ chatTime + " " + chatDate +"\n\n");
@@ -213,28 +217,4 @@ public class ChatFragment extends Fragment {
 
     }
 
-
-/*    private void updateFirebaseRefs()
-    {
-        messageRef = rootRef.child("groups").child("group1").child("messages");
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        messageRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                MessageClass oldMessage;
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String message = snapshot.child("message").getValue().toString();
-                    String msgUser = snapshot.child("user").getValue().toString();
-                    long time = Long.parseLong(snapshot.child("timestamp").getValue().toString());
-                    oldMessage = MessageClass();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        })
-    }
-*/
 }

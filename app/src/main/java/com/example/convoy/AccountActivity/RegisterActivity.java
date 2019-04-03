@@ -156,13 +156,14 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                            ///update database
-                            /*String currentNewId = mAuth.getCurrentUser().getUid();
+                            FirebaseUser savedUser = mAuth.getCurrentUser();
+                            String currentNewId = mAuth.getCurrentUser().getUid();
                             HashMap<String, Object> userInfoMap = new HashMap<>();
                             userInfoMap.put("name", name);
                             userInfoMap.put("email", email);
 
                             rootRef.child("user").child(currentNewId).setValue(userInfoMap);
-                            ///*/
+                            ///
                             showMessage("Account Created!");
                             updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
                         }
