@@ -155,13 +155,14 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                            ///update database
+                            mAuth = FirebaseAuth.getInstance();
                             showMessage("ACCOUNT IS ADDING NOWWWW??????????????????????????");
                             FirebaseUser savedUser = mAuth.getCurrentUser();
                             String currentNewId = savedUser.getUid();
                             HashMap<String, Object> userInfoMap = new HashMap<>();
                             userInfoMap.put("name", name);
                             userInfoMap.put("email", email);
-                            rootRef.child("user").child(currentNewId).setValue(userInfoMap);
+                            rootRef.child("user").child(currentNewId).updateChildren(userInfoMap);
                             ///
                             showMessage("Account Created!");
                             updateUserInfo( name, pickedImgUri, savedUser);
@@ -223,7 +224,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //this function will take us to our home page
     private void updateUI() {
-        Intent MainActivity = new Intent(getApplicationContext(), com.example.convoy.NavActivity.class);
+        Intent MainActivity = new Intent(getApplicationContext(), com.example.convoy.AccountActivity.LoginActivity.class);
         startActivity(MainActivity);
         finish();
     }
