@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.convoy.MainActivity;
+import com.example.convoy.NavActivity;
 import com.example.convoy.R;
 import com.example.convoy.actMap;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -70,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        mainIntenet = new Intent(this, com.example.convoy.NavActivity.class);
+        mainIntenet = new Intent(this, NavActivity.class);
 
 
 
