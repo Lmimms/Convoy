@@ -62,10 +62,7 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
         switch(menuItem.getItemId()){
             /*case R.id.nav_map://Fixme how to change to map
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                //      new actMap()).commit();
-                Intent registerActivity = new Intent(getApplicationContext(),actMap.class);
-                startActivity(registerActivity);
-                finish();
+
                 break;*/
             case R.id.nav_chat:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
