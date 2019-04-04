@@ -39,7 +39,7 @@ public class ChatFragment extends Fragment {
     private TextView messageTextView;
 
     //Array for messages
-    private ArrayList<MessageClass> messages;
+
 
 
     //The button and text

@@ -108,9 +108,15 @@ public class RegisterActivity extends AppCompatActivity {
                           btnRegister.setVisibility(View.VISIBLE);
                           loadingProgress.setVisibility(View.INVISIBLE);
                       }
-                      else if ( !password.equals(password2))
+                      else if ( matchPass(password, password2))
                       {
                           showMessage("Please match passwords");
+                          btnRegister.setVisibility(View.VISIBLE);
+                          loadingProgress.setVisibility(View.INVISIBLE);
+                      }
+                      else if (!validPass(password))
+                      {
+                          showMessage("Please enter valid passwords");
                           btnRegister.setVisibility(View.VISIBLE);
                           loadingProgress.setVisibility(View.INVISIBLE);
                       }
@@ -155,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                            ///update database
-                            showMessage("ACCOUNT IS ADDING NOWWWW??????????????????????????");
+                            //showMessage("ACCOUNT IS ADDING NOWWWW??????????????????????????");
                             String currentNewId = mAuth.getCurrentUser().getUid();
                             HashMap<String, Object> userInfoMap = new HashMap<>();
                             userInfoMap.put("name", name);
@@ -274,5 +280,21 @@ public class RegisterActivity extends AppCompatActivity {
             regUserPhoto.setImageURI(pickedImgUri);
         }
 
+    }
+
+    public static boolean validPass(String pass)
+    {
+        if(pass.length() < 6)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public static boolean matchPass(String passOne, String passTwo)
+    {
+        return  (passOne.equals(passTwo));
     }
 }
