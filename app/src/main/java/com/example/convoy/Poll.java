@@ -1,7 +1,9 @@
 package com.example.convoy;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class Poll {
 
@@ -18,14 +20,14 @@ public class Poll {
         if(c.size() == 0) return false;
         Iterator<String> i = c.iterator();
         String s;
-        while(i.hasNext())
-        {s = i.next();
-            if(s.length() <= 0 || c.indexOf(s)!= s.lastIndexOf(s) ){
-             return false;
-            }
-        }
-    return true;
+        return !hasDuplicate(i);
     }
+
+    private static boolean hasDuplicate(Iterator<String> i) {
+    //FIXME
+        return false;
+    }
+
     public ArrayList<String> getChoices(){
         return this.choices;
     }

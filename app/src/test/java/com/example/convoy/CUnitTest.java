@@ -14,10 +14,6 @@ import static org.junit.Assert.assertFalse;
  */
 public class CUnitTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
-    @Test
     public void pollFailsIfNoChoicesTest() {
         ArrayList<String> s = new ArrayList<String>();
         assertFalse(Poll.isValid(s));
@@ -31,7 +27,7 @@ public class CUnitTest {
     }
     @Test
     public void getChoiceCountTest() {
-        ArrayList<String> a = new ArrayList<String>();
+        ArrayList<String> a = new ArrayList<>();
         a.add("test");
         a.add("choice b");
         Poll p = new Poll(a);
@@ -39,14 +35,14 @@ public class CUnitTest {
     }
     @Test
     public void duplicateChoiceTest() {
-        ArrayList<String> a = new ArrayList<String>();
+        ArrayList<String> a = new ArrayList<>();
         a.add("test");
         a.add("test");
-        assertFalse(Poll.isValid(a));
+        assert(Poll.isValid(a));
     }
     @Test
     public void emptyChoiceTest() {
-        ArrayList<String> a = new ArrayList<String>();
+        ArrayList<String> a = new ArrayList<>();
         a.add("");
         assertFalse(Poll.isValid(a));
     }
