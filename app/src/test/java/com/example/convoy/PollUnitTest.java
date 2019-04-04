@@ -12,7 +12,7 @@ import static org.junit.Assert.assertFalse;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class CUnitTest {
+public class PollUnitTest {
     @Test
     public void pollFailsIfNoChoicesTest() {
         ArrayList<String> s = new ArrayList<String>();
