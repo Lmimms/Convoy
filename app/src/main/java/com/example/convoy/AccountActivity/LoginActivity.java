@@ -113,11 +113,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void showMessage(String text) {
+    public void showMessage(String text) {
 
         Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
 
     }
+
+
 
 
     @Override
@@ -132,4 +134,5 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
+
 }
