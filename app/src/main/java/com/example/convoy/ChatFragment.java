@@ -198,7 +198,7 @@ public class ChatFragment extends Fragment {
 
     private void DisplayMessages(DataSnapshot dataSnapshot)
     {
-        messageTextView = getView().findViewById(R.id.group_chat_text);
+       // messageTextView = getView().findViewById(R.id.group_chat_text);
 
         Iterator iterator = dataSnapshot.getChildren().iterator();
 
@@ -213,7 +213,7 @@ public class ChatFragment extends Fragment {
             }
             String chatTime = (String) ((DataSnapshot) iterator.next()).getValue();
 
-            messageTextView.append(chatName + "\n" + chatMessage + "\n"+ chatTime + " " + chatDate +"\n\n");
+            messageTextView.append(chatName + "\n" + chatMessage + "\n" + chatTime + " " + chatDate +"\n\n");
         }
 
 

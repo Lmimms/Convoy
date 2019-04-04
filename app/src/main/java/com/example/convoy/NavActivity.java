@@ -13,16 +13,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.convoy.AccountActivity.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class NavActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 1;
     private String currentGroupID;
+
 
     public String getCurrentGroupID(){ return currentGroupID; }
     public void setCurrentGroupID(String ID){ this.currentGroupID = ID; }
@@ -34,6 +42,7 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         currentGroupID = "group1";
 
@@ -53,7 +62,7 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
         if(savedInstanceState==null) {//FIXME change to login
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new ChatFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_poll);
+        navigationView.setCheckedItem(R.id.nav_chat);
 
           }
     }
