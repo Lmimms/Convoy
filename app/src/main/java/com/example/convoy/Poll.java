@@ -18,7 +18,13 @@ public class Poll {
     }
     public static boolean isValid(ArrayList<String> c){
         if(c.size() == 0) return false;
+
+
         Iterator<String> i = c.iterator();
+        while (i.hasNext()){
+            if(i.next() == "") return false;
+        }
+
         String s;
         return !hasDuplicate(i);
     }
