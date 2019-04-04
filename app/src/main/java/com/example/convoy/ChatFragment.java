@@ -139,7 +139,7 @@ public class ChatFragment extends Fragment {
             Calendar calForTime = Calendar.getInstance();
             SimpleDateFormat currentTimeFormat = new SimpleDateFormat( "hh:mm a");
             currentTime = currentTimeFormat.format(calForTime.getTime());
-            currentUserName = "tommy";
+            currentUserName = "Jeffery";
 
             HashMap<String, Object> groupMessageKey = new HashMap();
             groupRef.updateChildren(groupMessageKey);
