@@ -37,13 +37,15 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Setting up Firebase
         rootRef = FirebaseDatabase.getInstance().getReference();
         currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         emailTxt = (TextView) getView().findViewById(R.id.txtProfileEmail);
         nameTxt = (TextView) getView().findViewById(R.id.txtUserName);
-
         emailTxt.setText(currentFirebaseUser.getEmail().toString());
 
+        //reading the users name from Firebase and adding to textView
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
