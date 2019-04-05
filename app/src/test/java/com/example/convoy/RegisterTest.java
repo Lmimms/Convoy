@@ -22,4 +22,12 @@ public class RegisterTest {
     {
         assertFalse(RegisterActivity.validPass("hi"));
     }
+    @Test
+    public void emptyStrings(){
+        assertTrue(RegisterActivity.fieldsAreEmpty("","","",""));
+    }
+    @Test
+    public void notEmptyStrings(){
+        assertFalse(RegisterActivity.fieldsAreEmpty("word","4","56","more words"));
+    }
 }

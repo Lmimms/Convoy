@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
                       final String password2 = confPassword.getText().toString();
                       final String name = regName.getText().toString();
 
-                      if( email.isEmpty() || name.isEmpty() || password.isEmpty() || password2.isEmpty())
+                      if( fieldsAreEmpty(email,name,password,password2))
                       {
                           //display error
                           showMessage("Please fill all fields");
@@ -150,6 +150,13 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public static boolean fieldsAreEmpty(String e, String n, String p1, String p2){
+        if(e.isEmpty() || n.isEmpty() || p1.isEmpty() || p2.isEmpty())
+            return true;
+        else
+            return false;
     }
 
     private void CreateUserAccount(final String email, final String name, String password)
