@@ -153,6 +153,8 @@ public class ChatFragment extends Fragment {
             messageInfoMap.put("date", currentDate);
             messageInfoMap.put("time", currentTime);
 
+           //MessageClass messageInfoMap = new MessageClass(currentUserName,msg,currentDate,currentTime);
+
             groupKeyRef.updateChildren(messageInfoMap);
         }
 
@@ -218,5 +220,7 @@ public class ChatFragment extends Fragment {
 
 
     }
+
+
 
 }

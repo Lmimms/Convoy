@@ -35,5 +35,20 @@ public class MemberUnitTest {
         assertEquals(new LatLng(34.5,36.7),point);
     }
 
+    @Test
+    public void MemberGetTest()
+    {
+        GroupMember m = new GroupMember("aUser", 34.5,36.7,"123456789");
+        assertEquals("123456789",m.getUserID());
+        assertEquals("aUser",m.getName());
+    }
+
+    @Test
+    public void MemberSetIDTest()
+    {
+        GroupMember m = new GroupMember("aUser", 34.5,36.7,"123456789");
+        m.setUserID("101");
+        assertEquals("101",m.getUserID());
+    }
 
 }

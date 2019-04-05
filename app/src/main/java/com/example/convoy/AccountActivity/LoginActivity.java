@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String mail = userMail.getText().toString();
                 final String password = userPassword.getText().toString();
 
-                if(mail.isEmpty() || password.isEmpty())
+                if(emptyString(mail) || emptyString(password))
                 {
                     showMessage("please Verify Email and Password");
                     btnLogin.setVisibility(View.VISIBLE);
@@ -133,6 +133,24 @@ public class LoginActivity extends AppCompatActivity {
             updateUI();
 
         }
+    }
+
+    public static boolean emptyString (String str)
+    {
+        if(str.isEmpty())
+        {
+            return true;
+        }
+        else {
+            for (int i = 0; i < str.length(); i++) {
+                if ( Character.isLetter(str.charAt(i))) {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
     }
 
 }

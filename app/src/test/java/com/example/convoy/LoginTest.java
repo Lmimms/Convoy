@@ -7,14 +7,16 @@ import org.junit.Test;
 import org.junit.Assert.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class LoginTest
 {
 
     @Test
-    public static void showMessageTest()
+    public  void emptyStringTest()
     {
-       String test = "Hello there";
-      //  assertEquals(test,LoginActivity.showMessage("Hello there").toString);
+       assertTrue(LoginActivity.emptyString("    "));
     }
+
+
 }
