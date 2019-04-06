@@ -61,8 +61,8 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
 
         if(savedInstanceState==null) {//FIXME change to login
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new ChatFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_chat);
+                new ChangeGroupFragment()).commit();
+        navigationView.setCheckedItem(R.id.nav_change_group);
 
           }
     }
@@ -93,6 +93,11 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();
                 break;
+            case R.id.nav_change_group:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ChangeGroupFragment()).commit();
+                break;
+
             case R.id.nav_logout: //FIXME how to change to login
                 Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
                 // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
