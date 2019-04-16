@@ -13,7 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.Switch;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,8 +45,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
     private Location userLocation;
     private boolean firstUIUpdate;
     private boolean trackUser;
-    private String groupID;
+    private float zoom;
 
+
+
+    private String groupID;
     private ArrayList<GroupMember> members;
 
 
@@ -75,20 +81,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
-        ImageButton btnLocation = getView().findViewById(R.id.btnLocationButton);
-        btnLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!trackUser){
-                    //need to add change of icon
-                    trackUser = true;
-                }
-                else{
-                    trackUser = false;
-                }
-
-            }
-        });
+        zoom = 17.5f;
+        btnSetup();
     }
 
 
@@ -147,7 +141,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
             if(members.get(i).getUserID() == currentFirebaseUser.getUid()){
                 if(firstUIUpdate || trackUser) {
                     map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-                    map.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
+                    map.animateCamera(CameraUpdateFactory.zoomTo(zoom));
                     firstUIUpdate = false;
                 }
             }
@@ -193,6 +187,55 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
         double log = userLocation.getLongitude();
         membersRef.child(currentFirebaseUser.getUid()).child("lat").setValue(lat);
         membersRef.child(currentFirebaseUser.getUid()).child("long").setValue(log);
+    }
+
+    private void btnSetup(){
+
+//        ImageButton btnLocation = getView().findViewById(R.id.btnLocationButton);
+//        btnLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!trackUser){
+//                    //need to add change of icon
+//                    trackUser = true;
+//                }
+//                else{
+//                    trackUser = false;
+//                }
+//
+//            }
+//        });
+
+        Switch locationToggle = getView().findViewById(R.id.btnLocationToggle);
+        locationToggle.setChecked(true);
+        locationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                trackUser = !trackUser;
+            }
+        });
+
+        Button zoomIn = getView().findViewById(R.id.btnZoomIn);
+        Button zoomOut = getView().findViewById(R.id.btnZoomOut);
+
+        zoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoom = zoom + 1;
+                updateMapUI();
+            }
+        });
+
+        zoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoom = zoom -1;
+                updateMapUI();
+            }
+        });
+
+
+
     }
 
 }

@@ -196,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity {
         HashMap<String, Object> userInfoMap = new HashMap<>();
         userInfoMap.put("name", name);
         userInfoMap.put("email", email);
-        rootRef.child("user").child(currentNewId);
+        //rootRef.child("user").child(currentNewId);
         //UserTemplate newUser = new UserTemplate(name, email);
         rootRef.child("user").child(currentNewId).setValue(userInfoMap);
     }

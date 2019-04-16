@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -21,8 +21,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AccountActivity.RegisterActivity"/>
-        <activity android:name=".NavActivity"/>
+        <activity
+            android:name=".CreateGroupActivity"
+            android:label="@string/title_activity_create_group"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AccountActivity.RegisterActivity" />
+        <activity android:name=".NavActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -34,9 +38,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity android:name=".AccountActivity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
