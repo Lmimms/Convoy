@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         if(user != null)
         {
             //user is already connected
-            updateUI();
+            //updateUI();
 
         }
     }

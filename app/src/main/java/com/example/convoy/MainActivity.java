@@ -70,11 +70,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
                // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                  //       new LoginActivity()).commit();
-                Intent registerActivity2;
-                registerActivity2 = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent Activity2 = new Intent(getApplicationContext(),LoginActivity.class);
                 FirebaseAuth what = FirebaseAuth.getInstance();
                 what.signOut();
-                startActivity(registerActivity2);
+                startActivity(Activity2);
                 finish();
                 break;
 

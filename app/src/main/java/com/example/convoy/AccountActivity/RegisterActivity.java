@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
                           btnRegister.setVisibility(View.VISIBLE);
                           loadingProgress.setVisibility(View.INVISIBLE);
                       }
-                      else if ( matchPass(password, password2))
+                      else if ( !(matchPass(password, password2)))
                       {
                           showMessage("Please match passwords");
                           btnRegister.setVisibility(View.VISIBLE);
@@ -123,7 +123,9 @@ public class RegisterActivity extends AppCompatActivity {
                       else//this will be where we make the account after we do more checking
                       {
                                 CreateUserAccount(email, name, password);
+                                mAuth.signOut();
                                 startActivity(mainIntenet);
+                                finish();
                       }
 
                                            }
@@ -170,11 +172,14 @@ public class RegisterActivity extends AppCompatActivity {
                            ///update database
                             //showMessage("ACCOUNT IS ADDING NOWWWW??????????????????????????");
                             String currentNewId = mAuth.getCurrentUser().getUid();
+/*
                             HashMap<String, Object> userInfoMap = new HashMap<>();
                             userInfoMap.put("name", name);
                             userInfoMap.put("email", email);
+                            rootRef.child("user").child(currentNewId);
+                            //UserTemplate newUser = new UserTemplate(name, email);
                             rootRef.child("user").child(currentNewId).setValue(userInfoMap);
-                            ///
+  */                          ///
                             showMessage("Account Created!");
                             //updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
                         }
@@ -187,8 +192,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
-
-
+        String currentNewId = mAuth.getCurrentUser().getUid();
+        HashMap<String, Object> userInfoMap = new HashMap<>();
+        userInfoMap.put("name", name);
+        userInfoMap.put("email", email);
+        rootRef.child("user").child(currentNewId);
+        //UserTemplate newUser = new UserTemplate(name, email);
+        rootRef.child("user").child(currentNewId).setValue(userInfoMap);
     }
 
     private void updateUserInfo(final String name, Uri pickedURI, final FirebaseUser currentUser)
@@ -217,6 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         if( task.isSuccessful())
                                         {
+
                                             showMessage("Register Complete");
                                             updateUI();
                                         }
@@ -251,8 +262,6 @@ public class RegisterActivity extends AppCompatActivity {
             Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
             galleryIntent.setType("image/*");
             startActivityForResult(galleryIntent,REQUESCODE);
-
-
     }
 
     private void checkAndRequestForPermission() {
