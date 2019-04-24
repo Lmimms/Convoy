@@ -165,6 +165,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 GroupMember member;
                 members.clear();
+
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     String id = snapshot.getKey();
                     Log.d("Map Frag", "User ID being added to array " + id);

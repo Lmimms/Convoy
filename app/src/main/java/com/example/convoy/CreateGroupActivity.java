@@ -67,7 +67,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 rootRef.child(key).child("members").child(userID).child("lat").setValue(0.0);
                 rootRef.child(key).child("members").child(userID).child("long").setValue(0.0);
 
-                userRef.child(userID).child("groups").child(key).setValue(key);
+                userRef.child(userID).child("groups").child(key).setValue(groupName);
                 finish();
             }
         });
