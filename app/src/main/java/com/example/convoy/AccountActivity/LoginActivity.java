@@ -102,24 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                         loginProgress.setVisibility(View.INVISIBLE);
                         btnLogin.setVisibility(View.VISIBLE);
 
-                        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(!(dataSnapshot.child("user").child(FirebaseAuth.getInstance().getUid()).exists()))
-                                    {
-                                        HashMap<String, String> userInfoMap = new HashMap<>();
-                                        userInfoMap.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                                        userInfoMap.put("email", mail);
-                                        FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).setValue(userInfoMap);
-                                    }
 
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
                         updateUI();
                     }
                     else
