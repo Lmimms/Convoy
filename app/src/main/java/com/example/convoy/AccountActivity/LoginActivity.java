@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.convoy.MainActivity;
 import com.example.convoy.R;
+import com.example.convoy.SettingsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Intent MainActivity;
     private ImageView loginPhoto2;
-
+    private DatabaseReference rootRef;
 
 
     @Override
@@ -50,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister2 = findViewById(R.id.btnRegister);
         loginProgress = findViewById(R.id.loginProgress);
         mAuth = FirebaseAuth.getInstance();
+        rootRef = FirebaseDatabase.getInstance().getReference();
         //change whats below to change what opens after login
         MainActivity = new Intent(this, com.example.convoy.NavActivity.class);
         loginPhoto2 = findViewById(R.id.loginPhoto);
@@ -99,24 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                         loginProgress.setVisibility(View.INVISIBLE);
                         btnLogin.setVisibility(View.VISIBLE);
 
-                        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(!(dataSnapshot.child("user").child(FirebaseAuth.getInstance().getUid()).exists()))
-                                    {
-                                        HashMap<String, Object> userInfoMap = new HashMap<>();
-                                        userInfoMap.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                                        userInfoMap.put("email", mail);
-                                        FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).setValue(userInfoMap);
-                                    }
 
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
                         updateUI();
                     }
                     else
@@ -132,9 +118,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
+        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        startActivity(MainActivity);
-        finish();
+                if (null != ( dataSnapshot.child("user").child(currentFirebaseUser.getUid()).child("name").getValue())){
+                    startActivity(MainActivity);
+                    finish();
+
+                    }
+
+                else{ startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                finish();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
