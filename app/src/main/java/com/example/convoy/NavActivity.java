@@ -106,8 +106,8 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
                 Intent registerActivity2;
                 registerActivity2 = new Intent(getApplicationContext(),LoginActivity.class);
                 FirebaseAuth what = FirebaseAuth.getInstance();
-                what.signOut();
                 startActivity(registerActivity2);
+                what.signOut();
                 finish();
                 break;
 
