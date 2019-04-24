@@ -1,5 +1,6 @@
 package com.example.convoy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +24,7 @@ public class ProfileFragment extends Fragment {
 
     private DatabaseReference rootRef;
     private FirebaseUser currentFirebaseUser;
+    private Button changeNameButton;
 
     TextView emailTxt, nameTxt;
     String name;
@@ -45,6 +48,7 @@ public class ProfileFragment extends Fragment {
         nameTxt = (TextView) getView().findViewById(R.id.txtUserName);
         emailTxt.setText(currentFirebaseUser.getEmail().toString());
 
+        changeNameButton = (Button) getView().findViewById(R.id.btnChangeName);
         //reading the users name from Firebase and adding to textView
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -59,5 +63,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+    changeNameButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+       public void onClick(View v) {
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
+
+        }
+    });
     }
 }
