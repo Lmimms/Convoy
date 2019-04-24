@@ -53,8 +53,13 @@ public class ProfileFragment extends Fragment {
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("user").child(currentFirebaseUser.getUid()).child("name").getValue().toString();
-                nameTxt.setText(name);
+                Object test;
+                if (null != (test = dataSnapshot.child("user").child(currentFirebaseUser.getUid()).child("name").getValue())){
+                String name = test.toString();
+                nameTxt.setText(name);}
+
+                else startActivity(new Intent(getActivity(), SettingsActivity.class));
+
             }
 
             @Override
