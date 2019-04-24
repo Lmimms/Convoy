@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 //import android.widget.ImageView;
 import android.widget.Button;
@@ -31,8 +32,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -171,17 +175,11 @@ public class RegisterActivity extends AppCompatActivity {
                         {
                            ///update database
                             //showMessage("ACCOUNT IS ADDING NOWWWW??????????????????????????");
-                            String currentNewId = mAuth.getCurrentUser().getUid();
+                           // final String currentNewId = mAuth.getCurrentUser().getUid();
+                            //rootRef = FirebaseDatabase.getInstance().getReference();
 
-                            HashMap<String, Object> userInfoMap = new HashMap<>();
-                            userInfoMap.put("name", name);
-                            userInfoMap.put("email", email);
-                            //rootRef.child("user").child(currentNewId);
-                            //UserTemplate newUser = new UserTemplate(name, email);
-                            rootRef.child("user").child(currentNewId).setValue(userInfoMap);
-                            ///
-                            showMessage("Account Created!");
-                            //updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
+                           // showMessage("Account Created!");
+                            updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
                         }
                         else
                         {
@@ -204,20 +202,22 @@ public class RegisterActivity extends AppCompatActivity {
     private void updateUserInfo(final String name, Uri pickedURI, final FirebaseUser currentUser)
     {
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
-        final StorageReference imageFilePath = mStorage.child(pickedURI.getLastPathSegment());
+     /*   final StorageReference imageFilePath = mStorage.child(pickedURI.getLastPathSegment());
+
+
+
         imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+*/
                 // image uploaded succesfully
-                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
+       //         imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+         //           @Override
+           //         public void onSuccess(Uri uri) {
                         //uri contains user image url
 
                         UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(name)
-                                .setPhotoUri(uri)
                                 .build();
 
                         currentUser.updateProfile(profileUpdate)
@@ -233,12 +233,12 @@ public class RegisterActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-
+/*
                     }
                 });
 
             }
-        });
+        });*/
 
 
 
