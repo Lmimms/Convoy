@@ -201,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUserInfo(final String name, Uri pickedURI, final FirebaseUser currentUser)
     {
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
+       // StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
      /*   final StorageReference imageFilePath = mStorage.child(pickedURI.getLastPathSegment());
 
 
@@ -227,7 +227,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         if( task.isSuccessful())
                                         {
-
                                             showMessage("Register Complete");
                                             updateUI();
                                         }

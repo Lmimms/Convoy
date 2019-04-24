@@ -102,16 +102,14 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for(DataSnapshot data: dataSnapshot.getChildren())
-                                {
-                                    if(!(data.child(FirebaseAuth.getInstance().getUid()).exists()))
+                                    if(!(dataSnapshot.child("user").child(FirebaseAuth.getInstance().getUid()).exists()))
                                     {
                                         HashMap<String, Object> userInfoMap = new HashMap<>();
                                         userInfoMap.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                                         userInfoMap.put("email", mail);
                                         FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).setValue(userInfoMap);
                                     }
-                                }
+
                             }
 
                             @Override

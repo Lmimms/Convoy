@@ -1,5 +1,6 @@
 package com.example.convoy;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -43,6 +44,8 @@ public class SettingsActivity extends AppCompatActivity {
         }
         else{
             rootRef.child("user").child(mAuth.getCurrentUser().getUid()).child("name").setValue(newName);
+            startActivity(new Intent(getApplicationContext(), NavActivity.class));
+            finish();
         }
     }
 
