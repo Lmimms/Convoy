@@ -172,14 +172,14 @@ public class RegisterActivity extends AppCompatActivity {
                            ///update database
                             //showMessage("ACCOUNT IS ADDING NOWWWW??????????????????????????");
                             String currentNewId = mAuth.getCurrentUser().getUid();
-/*
+
                             HashMap<String, Object> userInfoMap = new HashMap<>();
                             userInfoMap.put("name", name);
                             userInfoMap.put("email", email);
-                            rootRef.child("user").child(currentNewId);
+                            //rootRef.child("user").child(currentNewId);
                             //UserTemplate newUser = new UserTemplate(name, email);
                             rootRef.child("user").child(currentNewId).setValue(userInfoMap);
-  */                          ///
+                            ///
                             showMessage("Account Created!");
                             //updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
                         }
@@ -192,13 +192,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
-        String currentNewId = mAuth.getCurrentUser().getUid();
-        HashMap<String, Object> userInfoMap = new HashMap<>();
-        userInfoMap.put("name", name);
-        userInfoMap.put("email", email);
+        //String currentNewId = mAuth.getCurrentUser().getUid();
+        //HashMap<String, Object> userInfoMap = new HashMap<>();
+        //userInfoMap.put("name", name);
+        //userInfoMap.put("email", email);
         //rootRef.child("user").child(currentNewId);
         //UserTemplate newUser = new UserTemplate(name, email);
-        rootRef.child("user").child(currentNewId).setValue(userInfoMap);
+        //rootRef.child("user").child(currentNewId).setValue(userInfoMap);
     }
 
     private void updateUserInfo(final String name, Uri pickedURI, final FirebaseUser currentUser)
@@ -248,6 +248,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void updateUI() {
         Intent MainActivity = new Intent(getApplicationContext(), com.example.convoy.AccountActivity.LoginActivity.class);
         startActivity(MainActivity);
+        mAuth.signOut();
         finish();
     }
 
