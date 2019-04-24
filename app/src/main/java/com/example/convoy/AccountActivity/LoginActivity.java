@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(null == (dataSnapshot.child("user").child(FirebaseAuth.getInstance().getUid()).getValue()))
+                                    if(!(dataSnapshot.child("user").child(FirebaseAuth.getInstance().getUid()).exists()))
                                     {
                                         HashMap<String, String> userInfoMap = new HashMap<>();
                                         userInfoMap.put("name", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
