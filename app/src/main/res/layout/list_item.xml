@@ -6,18 +6,12 @@
     android:id="@+id/listParent">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listGroupId"
-        android:text="Hello There"
-        android:layout_weight="2"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/listGroupName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:text="SOmeText"
-        android:layout_weight="2"/>
+        android:textSize="18sp" />
 
 
 </LinearLayout>

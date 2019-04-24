@@ -13,6 +13,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
+/*
+    this is the adapter class for the recycler view in ChangeGroupActivity
+    Follows the normal standards for recycler view
+ */
+
 public class GroupRecylcerAdapter extends RecyclerView.Adapter<GroupRecylcerAdapter.ViewHolder> {
 
     private ArrayList<Group> groups = new ArrayList<>();
@@ -34,13 +40,13 @@ public class GroupRecylcerAdapter extends RecyclerView.Adapter<GroupRecylcerAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
-        viewHolder.id.setText(groups.get(i).getId());
+        //viewHolder.id.setText(groups.get(i).getId());
         viewHolder.name.setText(groups.get(i).getName());
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavActivity.setCurrentGroupID(groups.get(i).getId());
-                Toast.makeText(mContext,"Group changed to " + NavActivity.getCurrentGroupID(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"Group changed to " + groups.get(i).getName(),Toast.LENGTH_SHORT).show();
 
 
             }
@@ -60,7 +66,6 @@ public class GroupRecylcerAdapter extends RecyclerView.Adapter<GroupRecylcerAdap
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.listGroupName);
-            id = itemView.findViewById(R.id.listGroupId);
             parentLayout = itemView.findViewById(R.id.listParent);
         }
     }
