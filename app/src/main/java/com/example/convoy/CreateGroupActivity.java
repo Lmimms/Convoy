@@ -39,7 +39,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Toast.makeText(getApplicationContext(),userID,Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),userID,Toast.LENGTH_LONG).show();
         database = FirebaseDatabase.getInstance();
         rootRef = database.getReference("groups");
         userRef = database.getReference("user");

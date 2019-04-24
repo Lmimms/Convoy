@@ -49,9 +49,10 @@ public class ChangeGroupFragment extends Fragment {
     private FirebaseUser user;
     private ArrayList<Group> aGroupList;
 
-    private String id, userEmail,newName;
+    private String id, userEmail,newName, email;
     boolean exist = false;
-    public static String groupName;
+    private boolean notAdded = true;
+    public  String groupName;
 
     @Nullable
     @Override
@@ -75,16 +76,13 @@ public class ChangeGroupFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String email = txtAddMember.getText().toString();
-                getEmail(email);
-                if(exist) {
-                    addMember();
-                    Toast.makeText(getContext(), email + " added to " + NavActivity.getCurrentGroupID(), Toast.LENGTH_LONG).show();
-                }
-                else
+                email = txtAddMember.getText().toString();
+                getEmail();
+                if(notAdded)
                     Toast.makeText(getContext(), "That user does not exist", Toast.LENGTH_LONG).show();
+                notAdded = true;
 
-                exist = false;
+
 
 
             }
@@ -126,32 +124,14 @@ public class ChangeGroupFragment extends Fragment {
     private void addMember() {
         DatabaseReference group = rootRef.child("groups").child(NavActivity.getCurrentGroupID());
         group.child("members").child(id).child("name").setValue(newName);
-        group.child("members").child(id).child("lat").setValue(1.01);
-        group.child("members").child(id).child("long").setValue(1.01);
+        group.child("members").child(id).child("lat").setValue(33.2083);
+        group.child("members").child(id).child("long").setValue(-87.5504);
 
         DatabaseReference user = rootRef.child("user");
-        user.child(id).child("groups").child(NavActivity.getCurrentGroupID()).setValue("the group name");
+        user.child(id).child("groups").child(NavActivity.getCurrentGroupID()).setValue(groupName);
 
     }
 
-    // a testing function for the Group ArrayList and adapter
-    public void makeFakeGroups(){
-        aGroupList.add(new Group("1234", "group Name"));
-        aGroupList.add(new Group("12344", "group Name"));
-        aGroupList.add(new Group("1245w435", "group Name"));
-        aGroupList.add(new Group("1234", "group Name"));
-        aGroupList.add(new Group("12344", "group Name"));
-        aGroupList.add(new Group("1245w435", "group Name"));
-        aGroupList.add(new Group("1234", "group Name"));
-        aGroupList.add(new Group("12344", "group Name"));
-        aGroupList.add(new Group("1245w435", "group Name"));
-        aGroupList.add(new Group("1234", "group Name"));
-        aGroupList.add(new Group("12344", "group Name"));
-        aGroupList.add(new Group("1245w435", "group Name"));
-        aGroupList.add(new Group("1234", "group Name"));
-        aGroupList.add(new Group("12344", "group Name"));
-        aGroupList.add(new Group("1245w435", "group Name"));
-    }
 
     //Intializing the recycler view
     public void makeRecylcerView(ArrayList<Group> list){
@@ -161,10 +141,8 @@ public class ChangeGroupFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    public void getEmail(final String email){
-
+    public void getEmail(){
         DatabaseReference users = rootRef.child("user");
-
         users.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -172,11 +150,14 @@ public class ChangeGroupFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     String e = snapshot.child("email").getValue().toString();
                     if(e.equals(email)){
-                        //Toast.makeText(getContext(),"it exist",Toast.LENGTH_LONG).show();
                         exist = true;
                         userEmail = e;
                         id = snapshot.getKey();
                         newName = snapshot.child("name").getValue().toString();
+                        addMember();
+                        //Toast.makeText(getContext(), email + " added to " + groupName, Toast.LENGTH_LONG).show();
+                        exist = false;
+                        notAdded = false;
                         break;
                     }
 

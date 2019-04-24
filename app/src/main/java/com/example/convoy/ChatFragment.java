@@ -33,10 +33,12 @@ import com.google.firebase.database.ValueEventListener;
 public class ChatFragment extends Fragment {
     // Firebase instance variables
     private DatabaseReference usersRef , groupRef, groupKeyRef;
+    private DatabaseReference groupNameRef;
     private DatabaseReference rootRef;
     private DatabaseReference messageRef;
     private FirebaseAuth mAuth;
     private TextView messageTextView;
+    private TextView groupLabel;
 
     //Array for messages
 
@@ -76,8 +78,23 @@ public class ChatFragment extends Fragment {
         messageToSend = getView().findViewById(R.id.txtMessage);
         msgScroll = getView().findViewById(R.id.msgScroller);
         messageTextView = getView().findViewById(R.id.group_chat_text);
+        groupLabel = getView().findViewById(R.id.groupLabel);
         //setup firebase  references
         rootRef = FirebaseDatabase.getInstance().getReference();
+        groupNameRef = rootRef.child("groups").child(NavActivity.getCurrentGroupID());
+//        Toast.makeText(getContext(),NavActivity.getCurrentGroupID(),Toast.LENGTH_LONG).show();
+        groupNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Toast.makeText(getContext(),String.valueOf(dataSnapshot.getChildrenCount()),Toast.LENGTH_LONG).show();
+                groupLabel.setText(dataSnapshot.child("name").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         //get firbase needed references
                                                                                                 //needed to add child messages
         groupRef = FirebaseDatabase.getInstance().getReference().child("groups").child(currentGroup).child("messages");//FIXME replace group1 with current group
