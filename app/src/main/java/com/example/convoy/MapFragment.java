@@ -192,21 +192,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
 
     private void btnSetup(){
 
-//        ImageButton btnLocation = getView().findViewById(R.id.btnLocationButton);
-//        btnLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!trackUser){
-//                    //need to add change of icon
-//                    trackUser = true;
-//                }
-//                else{
-//                    trackUser = false;
-//                }
-//
-//            }
-//        });
-
         Switch locationToggle = getView().findViewById(R.id.btnLocationToggle);
         locationToggle.setChecked(true);
         locationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -27,13 +27,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class NavActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
+    private static String currentGroupID;
     private DrawerLayout drawer;
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 1;
-    private String currentGroupID;
+//    private String currentGroupID;
 
 
-    public String getCurrentGroupID(){ return currentGroupID; }
-    public void setCurrentGroupID(String ID){ this.currentGroupID = ID; }
+    public static  String getCurrentGroupID(){ return currentGroupID; }
+    public static void setCurrentGroupID(String ID){ currentGroupID = ID; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

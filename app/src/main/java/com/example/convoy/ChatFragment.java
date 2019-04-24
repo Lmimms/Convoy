@@ -139,7 +139,7 @@ public class ChatFragment extends Fragment {
             Calendar calForTime = Calendar.getInstance();
             SimpleDateFormat currentTimeFormat = new SimpleDateFormat( "hh:mm a");
             currentTime = currentTimeFormat.format(calForTime.getTime());
-            currentUserName = "Jeffery";
+            //currentUserName = "Jeffery";
 
             HashMap<String, Object> groupMessageKey = new HashMap();
             groupRef.updateChildren(groupMessageKey);
@@ -203,6 +203,7 @@ public class ChatFragment extends Fragment {
        // messageTextView = getView().findViewById(R.id.group_chat_text);
 
         Iterator iterator = dataSnapshot.getChildren().iterator();
+        msgScroll.fullScroll(ScrollView.FOCUS_DOWN);
 
         while(iterator.hasNext())
         {
