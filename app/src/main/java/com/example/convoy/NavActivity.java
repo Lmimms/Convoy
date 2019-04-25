@@ -45,7 +45,7 @@ public class NavActivity extends AppCompatActivity  implements NavigationView.On
         setSupportActionBar(toolbar);
 
 
-        currentGroupID = "group1";
+        currentGroupID = null;
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

@@ -46,6 +46,7 @@ public class ChangeGroupFragment extends Fragment {
     private Button makeGroupBtn;
     private DatabaseReference rootRef;
     private DatabaseReference userGroupRef;
+    private DatabaseReference groupNameRef;
     private FirebaseUser user;
     private ArrayList<Group> aGroupList;
 
@@ -81,10 +82,6 @@ public class ChangeGroupFragment extends Fragment {
                 if(notAdded)
                     Toast.makeText(getContext(), "That user does not exist", Toast.LENGTH_LONG).show();
                 notAdded = true;
-
-
-
-
             }
         });
 
@@ -105,8 +102,8 @@ public class ChangeGroupFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 aGroupList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    if(snapshot.getKey().equals(NavActivity.getCurrentGroupID()))
-                        groupName = snapshot.getValue().toString();
+//                    if(snapshot.getKey().equals(NavActivity.getCurrentGroupID()))
+//                        groupName = snapshot.getValue().toString();
                     aGroupList.add(new Group(snapshot.getKey().toString(), snapshot.getValue().toString()));
                 }
                 makeRecylcerView(aGroupList);
@@ -117,15 +114,26 @@ public class ChangeGroupFragment extends Fragment {
 
             }
         });
-
-
     }
-
+    // adds the member to a group and adds the group to the list of groups the user is in
     private void addMember() {
         DatabaseReference group = rootRef.child("groups").child(NavActivity.getCurrentGroupID());
         group.child("members").child(id).child("name").setValue(newName);
         group.child("members").child(id).child("lat").setValue(33.2083);
         group.child("members").child(id).child("long").setValue(-87.5504);
+
+        groupNameRef = rootRef.child("groups").child(NavActivity.getCurrentGroupID());
+        groupNameRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                groupName = dataSnapshot.child("name").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         DatabaseReference user = rootRef.child("user");
         user.child(id).child("groups").child(NavActivity.getCurrentGroupID()).setValue(groupName);
@@ -140,7 +148,7 @@ public class ChangeGroupFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-
+    //check to see if the given email exist
     public void getEmail(){
         DatabaseReference users = rootRef.child("user");
         users.addValueEventListener(new ValueEventListener() {
@@ -155,16 +163,13 @@ public class ChangeGroupFragment extends Fragment {
                         id = snapshot.getKey();
                         newName = snapshot.child("name").getValue().toString();
                         addMember();
-                        //Toast.makeText(getContext(), email + " added to " + groupName, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), email + " added to " + groupName, Toast.LENGTH_LONG).show();
                         exist = false;
                         notAdded = false;
                         break;
                     }
-
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

@@ -66,7 +66,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
             mapFragment = SupportMapFragment.newInstance();
             mapFragment.getMapAsync(this);
         }
-
+        //vars for checing when to track user
         firstUIUpdate = true;
         trackUser = true;
         members = new ArrayList<GroupMember>();
@@ -147,12 +147,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
             }
         }
 
-        //Used to check if the map camera should be used to focus on the users location
-//        if(firstUIUpdate || trackUser) {
-//            map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-//            map.animateCamera(CameraUpdateFactory.zoomTo(17.5f));
-//            firstUIUpdate = false;
-//        }
     }
 
     // Setup the firebase group reference to listen for changes in group members locations
@@ -182,14 +176,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
             }
         });
     }
-
+    // wtites the location of the user to the database
     private void writeLocation(){
         double lat = userLocation.getLatitude();
         double log = userLocation.getLongitude();
         membersRef.child(currentFirebaseUser.getUid()).child("lat").setValue(lat);
         membersRef.child(currentFirebaseUser.getUid()).child("long").setValue(log);
     }
-
+    //setup for UI buttons
     private void btnSetup(){
 
         Switch locationToggle = getView().findViewById(R.id.btnLocationToggle);

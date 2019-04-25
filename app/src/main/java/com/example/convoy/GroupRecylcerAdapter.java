@@ -46,7 +46,8 @@ public class GroupRecylcerAdapter extends RecyclerView.Adapter<GroupRecylcerAdap
             @Override
             public void onClick(View v) {
                 NavActivity.setCurrentGroupID(groups.get(i).getId());
-               Toast.makeText(mContext,"Group changed to " + groups.get(i).getName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"Group changed to " + groups.get(i).getName(),Toast.LENGTH_SHORT).show();
+
 
 
             }

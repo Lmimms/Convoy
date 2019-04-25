@@ -59,6 +59,7 @@ public class CreateGroupActivity extends AppCompatActivity {
             }
         });
 
+        // button click
         btnMakeGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
