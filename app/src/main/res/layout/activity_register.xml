@@ -37,11 +37,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="48dp"
         android:contentDescription="tempPicture"
-        app:layout_constraintBottom_toTopOf="@+id/regName"
+        app:layout_constraintBottom_toTopOf="@+id/regMail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/apple" />
+        app:srcCompat="@drawable/ic_launcher_round2" />
 
     <EditText
         android:id="@+id/regPassword"
