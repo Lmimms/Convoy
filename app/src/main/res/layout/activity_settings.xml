@@ -21,7 +21,7 @@
         android:layout_below="@id/profile_Image"
         android:layout_marginTop="45dp"
         android:inputType="textMultiLine"
-        android:hint="Enter Name..."
+        android:hint="Enter Display Name..."
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:id="@+id/set_user_name"
