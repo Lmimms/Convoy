@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
     Uri pickedImgUri;
 
 
-    private EditText regName, regMail, regPassword, confPassword;
+    private EditText regMail, regPassword, confPassword;
     private ProgressBar loadingProgress;
     private Button btnRegister;
     private Button btnBack;
@@ -72,7 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
         regPassword = findViewById(R.id.regPassword);
         confPassword = findViewById(R.id.confPassword);
         btnBack = findViewById(R.id.btnBackLogin);
-        regName = findViewById(R.id.regName);
         loadingProgress = findViewById(R.id.loadingProgress);
         btnRegister = findViewById(R.id.btnRegister);
         loadingProgress.setVisibility(View.INVISIBLE);
@@ -103,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                       final String email = regMail.getText().toString();
                       final String password = regPassword.getText().toString();
                       final String password2 = confPassword.getText().toString();
-                      final String name = regName.getText().toString();
+                      final String name = "a";
 
                       if( fieldsAreEmpty(email,name,password,password2))
                       {
@@ -179,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //rootRef = FirebaseDatabase.getInstance().getReference();
 
                            // showMessage("Account Created!");
-                            updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
+                          //  updateUserInfo( name, pickedImgUri, mAuth.getCurrentUser());
                         }
                         else
                         {
