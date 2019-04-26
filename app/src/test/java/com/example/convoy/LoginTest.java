@@ -18,5 +18,10 @@ public class LoginTest
        assertTrue(LoginActivity.emptyString("    "));
     }
 
+    @Test
+    public void EmptyString(){assertFalse(LoginActivity.emptyString("    a"));}
+
+    @Test
+    public void EmptyStringTestTrue(){assertTrue(LoginActivity.EmptyString(""));}
 
 }
